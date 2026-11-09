@@ -1,0 +1,1203 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chúc Mừng Sinh Nhật Tháng 11 - November Birthday Special</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Great Vibes, Dancing Script, Quicksand, Playfair Display -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Great+Vibes&family=Quicksand:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;1,400&display=swap" rel="stylesheet">
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Canvas Confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Quicksand', 'sans-serif'],
+            cursive: ['Great Vibes', 'cursive'],
+            handwriting: ['Dancing Script', 'cursive'],
+            serif: ['Playfair Display', 'serif']
+          },
+          colors: {
+            autumn: {
+              gold: '#F59E0B',
+              amber: '#D97706',
+              rust: '#B45309',
+              darkRed: '#7C2D12',
+              warmNight: '#1E1428',
+              deepNight: '#0F0918'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Nền không gian huyền ảo mùa thu chớm đông */
+    body {
+      background: radial-gradient(circle at 50% 20%, #2A173B 0%, #150A21 60%, #0A0512 100%);
+      color: #FFF7ED;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    /* Canvas nền tuyết/lá phong */
+    #autumnCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 10;
+    }
+
+    /* Hiệu ứng kính bóng bẩy (Glassmorphism) */
+    .glass-card {
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 220, 180, 0.2);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4), 0 0 30px rgba(245, 158, 11, 0.15);
+    }
+
+    .glass-card-subtle {
+      background: rgba(255, 255, 255, 0.04);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* Hiệu ứng phát sáng ngọn nến */
+    .flame {
+      width: 18px;
+      height: 30px;
+      background: radial-gradient(ellipse at bottom, #FFED4A 0%, #F59E0B 40%, #EF4444 85%, transparent 100%);
+      border-radius: 50% 50% 20% 20%;
+      box-shadow: 0 0 20px #F59E0B, 0 0 35px #EF4444;
+      animation: flicker 1.2s ease-in-out infinite alternate;
+      transform-origin: center bottom;
+      transition: all 0.4s ease-out;
+    }
+
+    @keyframes flicker {
+      0% { transform: scale(1) rotate(-2deg); opacity: 0.95; }
+      50% { transform: scale(1.08, 0.94) rotate(2deg); opacity: 1; filter: drop-shadow(0 0 10px #FBBF24); }
+      100% { transform: scale(0.96, 1.05) rotate(-1deg); opacity: 0.9; }
+    }
+
+    /* Khói khi thổi nến */
+    .smoke {
+      position: absolute;
+      top: -15px;
+      left: 50%;
+      width: 10px;
+      height: 10px;
+      background: rgba(230, 230, 230, 0.6);
+      border-radius: 50%;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateX(-50%);
+    }
+
+    .smoke.active {
+      animation: smokeRise 1.6s forwards cubic-bezier(0, 0.55, 0.45, 1);
+    }
+
+    @keyframes smokeRise {
+      0% { opacity: 0.8; transform: translate(-50%, 0) scale(0.8); }
+      50% { opacity: 0.5; transform: translate(-60%, -35px) scale(2.2); }
+      100% { opacity: 0; transform: translate(-40%, -75px) scale(3.5); }
+    }
+
+    /* Nút vàng lấp lánh */
+    .btn-glow {
+      background: linear-gradient(135deg, #F59E0B 0%, #D97706 50%, #B45309 100%);
+      box-shadow: 0 4px 20px rgba(217, 119, 6, 0.45);
+      transition: all 0.3s ease;
+    }
+
+    .btn-glow:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(245, 158, 11, 0.65);
+    }
+
+    /* Animation rung nhẹ hộp quà */
+    @keyframes wiggle {
+      0%, 100% { transform: rotate(0deg); }
+      20% { transform: rotate(-5deg) scale(1.03); }
+      40% { transform: rotate(5deg) scale(1.03); }
+      60% { transform: rotate(-3deg); }
+      80% { transform: rotate(3deg); }
+    }
+
+    .gift-wiggle:hover {
+      animation: wiggle 0.7s ease-in-out infinite;
+    }
+
+    /* Custom Toast thông báo */
+    #toast {
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+  </style>
+</head>
+<body class="flex flex-col min-h-screen relative font-sans select-none">
+
+  <!-- Canvas lá phong & bụi sao bay lãng mạn -->
+  <canvas id="autumnCanvas"></canvas>
+
+  <!-- Header Điều Khiển Âm Thanh & Đổi Người Dùng -->
+  <header class="relative z-30 w-full px-5 py-4 flex justify-between items-center max-w-5xl mx-auto">
+    <div class="flex items-center gap-2">
+      <span class="text-amber-400 text-2xl animate-spin" style="animation-duration: 12s;"><i class="fa-solid fa-sparkles"></i></span>
+      <span class="font-serif tracking-wider text-sm sm:text-base text-amber-200/80 font-medium">November Memories</span>
+    </div>
+
+    <div class="flex items-center gap-3">
+      <!-- Nút âm thanh -->
+      <button id="musicToggleBtn" class="flex items-center gap-2 px-3.5 py-1.5 rounded-full glass-card hover:bg-white/10 text-xs sm:text-sm text-amber-100 transition-all">
+        <i id="musicIcon" class="fa-solid fa-volume-xmark text-amber-400"></i>
+        <span id="musicStatusText">Bật nhạc</span>
+      </button>
+
+      <!-- Nút đổi người nhận (chỉ hiện khi đã vào thiệp) -->
+      <button id="resetNameBtn" class="hidden items-center gap-1.5 px-3 py-1.5 rounded-full glass-card hover:bg-white/10 text-xs sm:text-sm text-amber-200 transition-all">
+        <i class="fa-solid fa-user-pen"></i>
+        <span class="hidden sm:inline">Đổi tên</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- VÙNG CHÍNH CHỨA 2 MÀN HÌNH -->
+  <main class="relative z-20 flex-1 flex items-center justify-center p-4">
+
+    <!-- 1. MÀN HÌNH NHẬP TÊN (FORM SCREEN) -->
+    <section id="formScreen" class="w-full max-w-lg transition-all duration-700">
+      <div class="glass-card rounded-3xl p-6 sm:p-10 text-center relative overflow-hidden">
+        <!-- Ánh sáng trang trí góc -->
+        <div class="absolute -top-20 -left-20 w-44 h-44 bg-amber-500/20 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute -bottom-20 -right-20 w-44 h-44 bg-rose-500/20 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="mb-4 inline-block p-4 rounded-2xl bg-amber-500/10 border border-amber-400/20 text-amber-400 text-3xl shadow-inner">
+          <i class="fa-solid fa-envelope-open-text"></i>
+        </div>
+
+        <h1 class="text-3xl sm:text-4xl font-serif font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-200 via-amber-400 to-orange-400 mb-2">
+          Chào Tháng 11 Yêu Dấu
+        </h1>
+        <p class="text-sm sm:text-base text-amber-100/70 mb-7 font-light">
+          Mùa của lá phong vàng, của làn gió se lạnh chớm đông. Hãy nhập tên người đặc biệt để chuẩn bị mở thiệp sinh nhật nhé!
+        </p>
+
+        <form id="birthdayForm" class="space-y-4 text-left">
+          <div>
+            <label for="userNameInput" class="block text-xs uppercase tracking-wider text-amber-300 font-semibold mb-1 ml-1">
+              Họ và tên hoặc Biệt danh <span class="text-rose-400">*</span>
+            </label>
+            <div class="relative">
+              <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-amber-300/60">
+                <i class="fa-solid fa-cake-candles"></i>
+              </span>
+              <input 
+                type="text" 
+                id="userNameInput" 
+                required 
+                maxlength="35"
+                placeholder="Ví dụ: Hoàng My, Nhật Nam..." 
+                class="w-full pl-11 pr-4 py-3 rounded-2xl bg-black/40 border border-amber-400/30 text-amber-50 placeholder-amber-200/30 focus:outline-none focus:border-amber-400 focus:ring-2 focus:ring-amber-400/30 transition-all font-medium text-base"
+              >
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div>
+              <label for="birthMonthSelect" class="block text-xs uppercase tracking-wider text-amber-300 font-semibold mb-1 ml-1">
+                Tháng sinh
+              </label>
+              <div class="relative">
+                <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-amber-300/60">
+                  <i class="fa-regular fa-calendar"></i>
+                </span>
+                <select 
+                  id="birthMonthSelect" 
+                  class="w-full pl-11 pr-8 py-3 rounded-2xl bg-black/40 border border-amber-400/30 text-amber-50 focus:outline-none focus:border-amber-400 focus:ring-2 focus:ring-amber-400/30 transition-all font-medium appearance-none cursor-pointer"
+                >
+                  <option value="1" class="bg-slate-900 text-white">Tháng 1</option>
+                  <option value="2" class="bg-slate-900 text-white">Tháng 2</option>
+                  <option value="3" class="bg-slate-900 text-white">Tháng 3</option>
+                  <option value="4" class="bg-slate-900 text-white">Tháng 4</option>
+                  <option value="5" class="bg-slate-900 text-white">Tháng 5</option>
+                  <option value="6" class="bg-slate-900 text-white">Tháng 6</option>
+                  <option value="7" class="bg-slate-900 text-white">Tháng 7</option>
+                  <option value="8" class="bg-slate-900 text-white">Tháng 8</option>
+                  <option value="9" class="bg-slate-900 text-white">Tháng 9</option>
+                  <option value="10" class="bg-slate-900 text-white">Tháng 10</option>
+                  <option value="11" selected class="bg-slate-900 text-white">Tháng 11</option>
+                  <option value="12" class="bg-slate-900 text-white">Tháng 12</option>
+                </select>
+                <span class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-amber-300/50">
+                  <i class="fa-solid fa-chevron-down text-xs"></i>
+                </span>
+              </div>
+            </div>
+
+            <div>
+              <label for="birthDayInput" class="block text-xs uppercase tracking-wider text-amber-300 font-semibold mb-1 ml-1">
+                Ngày sinh
+              </label>
+              <div class="relative">
+                <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-amber-300/60">
+                  <i class="fa-regular fa-calendar-days"></i>
+                </span>
+                <input 
+                  type="number" 
+                  id="birthDayInput" 
+                  min="1" 
+                  max="31" 
+                  value="15"
+                  class="w-full pl-11 pr-4 py-3 rounded-2xl bg-black/40 border border-amber-400/30 text-amber-50 focus:outline-none focus:border-amber-400 focus:ring-2 focus:ring-amber-400/30 transition-all font-medium"
+                >
+              </div>
+            </div>
+
+            <div>
+              <label for="genderSelect" class="block text-xs uppercase tracking-wider text-amber-300 font-semibold mb-1 ml-1">
+                Danh xưng
+              </label>
+              <div class="relative">
+                <span class="absolute inset-y-0 left-0 flex items-center pl-4 text-amber-300/60">
+                  <i class="fa-solid fa-venus-mars"></i>
+                </span>
+                <select 
+                  id="genderSelect" 
+                  class="w-full pl-11 pr-8 py-3 rounded-2xl bg-black/40 border border-amber-400/30 text-amber-50 focus:outline-none focus:border-amber-400 focus:ring-2 focus:ring-amber-400/30 transition-all font-medium appearance-none cursor-pointer"
+                >
+                  <option value="female" class="bg-slate-900 text-white">Cô gái ✨</option>
+                  <option value="male" class="bg-slate-900 text-white">Chàng trai 🍂</option>
+                  <option value="lover" class="bg-slate-900 text-white">Người thương 💖</option>
+                  <option value="friend" class="bg-slate-900 text-white">Bạn thân 🌟</option>
+                </select>
+                <span class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-amber-300/50">
+                  <i class="fa-solid fa-chevron-down text-xs"></i>
+                </span>
+              </div>
+            </div>
+          </div>
+
+          <button 
+            type="submit" 
+            class="w-full mt-4 py-3.5 px-6 rounded-2xl btn-glow font-bold text-white text-base tracking-wide flex items-center justify-center gap-3 cursor-pointer group"
+          >
+            <span>Mở Thiệp Sinh Nhật</span>
+            <i class="fa-solid fa-wand-magic-sparkles group-hover:rotate-12 transition-transform duration-300"></i>
+          </button>
+        </form>
+
+        <div class="mt-6 pt-5 border-t border-white/10 flex items-center justify-center gap-6 text-xs text-amber-200/50">
+          <span class="flex items-center gap-1.5"><i class="fa-solid fa-leaf text-amber-500"></i> Lá phong vàng</span>
+          <span class="flex items-center gap-1.5"><i class="fa-solid fa-shield-cat text-purple-400"></i> Cung Bọ Cạp / Nhân Mã</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. MÀN HÌNH CHÚC MỪNG SINH NHẬT (CELEBRATION SCREEN) -->
+    <section id="cardScreen" class="hidden w-full max-w-3xl transition-all duration-700">
+      <div class="glass-card rounded-3xl p-6 sm:p-10 text-center relative overflow-hidden shadow-2xl">
+        
+        <!-- Nhãn huy hiệu tháng & Cung Hoàng Đạo -->
+        <div class="flex flex-wrap items-center justify-center gap-2 mb-4">
+          <span id="badgeGender" class="px-3 py-1 rounded-full text-xs font-semibold bg-amber-500/20 text-amber-300 border border-amber-500/30 flex items-center gap-1.5">
+            <i class="fa-solid fa-star"></i> Thiên thần
+          </span>
+          <span id="badgeZodiac" class="px-3 py-1 rounded-full text-xs font-semibold bg-purple-500/20 text-purple-300 border border-purple-500/30 flex items-center gap-1.5">
+            <i class="fa-solid fa-moon"></i> Cung Hoàng Đạo
+          </span>
+          <span id="badgeDate" class="px-3 py-1 rounded-full text-xs font-semibold bg-orange-500/20 text-orange-300 border border-orange-500/30 flex items-center gap-1.5">
+            <i class="fa-regular fa-calendar-check"></i> Ngày sinh
+          </span>
+        </div>
+
+        <!-- Tiêu đề mừng sinh nhật tên người nhận -->
+        <h2 class="text-xl sm:text-2xl font-serif text-amber-200/80 mb-1">Happy Birthday to</h2>
+        <h1 id="displayRecipientName" class="text-4xl sm:text-6xl font-handwriting font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-200 via-yellow-300 to-amber-500 tracking-wide drop-shadow mb-6 py-1">
+          Hoàng My
+        </h1>
+
+        <!-- VÙNG TƯƠNG TÁC: BÁNH SINH NHẬT VÀ THỔI NẾN -->
+        <div class="my-6 p-5 sm:p-7 rounded-2xl glass-card-subtle relative max-w-md mx-auto flex flex-col items-center">
+          
+          <!-- Bánh sinh nhật & Nến tương tác -->
+          <div id="cakeContainer" class="relative cursor-pointer group py-2" title="Chạm vào để thổi nến hoặc thắp nến!">
+            <!-- Nến -->
+            <div class="relative mx-auto flex flex-col items-center">
+              <!-- Khói -->
+              <div id="smokeEffect" class="smoke"></div>
+              <!-- Ngọn lửa -->
+              <div id="candleFlame" class="flame mb-1"></div>
+              <!-- Thân nến -->
+              <div class="w-3.5 h-11 bg-gradient-to-r from-amber-100 via-yellow-200 to-amber-300 rounded-t-sm shadow-sm relative">
+                <div class="w-full h-1 bg-amber-400/40 my-2"></div>
+              </div>
+            </div>
+
+            <!-- Tầng bánh trên -->
+            <div class="w-32 h-10 bg-gradient-to-b from-amber-100 to-amber-200 rounded-t-2xl mx-auto shadow-md relative overflow-hidden flex items-center justify-center">
+              <div class="absolute top-0 w-full flex justify-around">
+                <span class="w-3 h-3 bg-amber-300 rounded-full inline-block"></span>
+                <span class="w-3 h-3 bg-rose-300 rounded-full inline-block"></span>
+                <span class="w-3 h-3 bg-amber-300 rounded-full inline-block"></span>
+                <span class="w-3 h-3 bg-rose-300 rounded-full inline-block"></span>
+              </div>
+              <span class="text-[10px] text-amber-800/80 font-bold tracking-widest uppercase mt-2">Nov Bliss</span>
+            </div>
+
+            <!-- Tầng bánh dưới -->
+            <div class="w-48 h-14 bg-gradient-to-b from-amber-700 via-amber-800 to-amber-900 rounded-t-xl rounded-b-md mx-auto shadow-xl relative border-t-4 border-amber-300/40 flex items-center justify-center">
+              <!-- Họa tiết kem chảy -->
+              <div class="text-amber-200/90 text-sm font-serif italic">
+                Sweet Autumn
+              </div>
+            </div>
+
+            <!-- Đĩa bánh -->
+            <div class="w-56 h-3 bg-gradient-to-r from-stone-400 via-amber-100 to-stone-400 rounded-full mx-auto shadow-lg"></div>
+          </div>
+
+          <p id="candleTip" class="text-xs sm:text-sm text-amber-200/70 mt-3 flex items-center gap-1.5 animate-pulse">
+            <i class="fa-solid fa-wind text-amber-400"></i> Bấm vào bánh sinh nhật để <b>Thổi Nến</b> & Ước Nguyện!
+          </p>
+
+          <!-- Nút kích hoạt hiệu ứng pháo hoa giấy -->
+          <div class="flex gap-2 mt-4">
+            <button id="confettiBtn" class="px-4 py-2 rounded-xl bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 text-xs font-semibold border border-amber-400/30 transition-all flex items-center gap-2">
+              <i class="fa-solid fa-gift"></i> Nổ Pháo Hoa Giấy
+            </button>
+            <button id="wishShuffleBtn" class="px-4 py-2 rounded-xl bg-purple-500/20 hover:bg-purple-500/30 text-purple-200 text-xs font-semibold border border-purple-400/30 transition-all flex items-center gap-2">
+              <i class="fa-solid fa-rotate"></i> Đổi Lời Chúc Mới
+            </button>
+          </div>
+        </div>
+
+        <!-- HỘP LỜI CHÚC THÁNG 11 -->
+        <div class="relative p-6 sm:p-8 rounded-2xl bg-black/40 border border-amber-400/30 text-amber-100/95 max-w-xl mx-auto shadow-inner text-left">
+          <i class="fa-solid fa-quote-left text-2xl text-amber-400/40 mb-2 block"></i>
+          <p id="wishContent" class="text-base sm:text-lg leading-relaxed font-normal min-h-[90px] transition-opacity duration-300">
+            <!-- Sẽ được fill bằng JavaScript -->
+          </p>
+          <div class="mt-4 flex items-center justify-between text-xs text-amber-300/70 border-t border-white/10 pt-3">
+            <span class="italic font-serif">Mùa thu tháng 11 ấm áp gửi đến bạn</span>
+            <span class="flex items-center gap-1"><i class="fa-solid fa-heart text-rose-400"></i> Best Wishes</span>
+          </div>
+        </div>
+
+        <!-- CÁC NÚT CHIA SẺ & THAO TÁC -->
+        <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
+          <button id="shareLinkBtn" class="px-5 py-3 rounded-2xl btn-glow text-white text-sm font-semibold flex items-center gap-2 shadow-lg">
+            <i class="fa-solid fa-share-nodes"></i> Sao chép link tặng bạn
+          </button>
+          <button id="giftBoxBtn" class="px-5 py-3 rounded-2xl glass-card hover:bg-white/15 text-amber-200 text-sm font-semibold flex items-center gap-2 transition-all">
+            <i class="fa-solid fa-box-open text-amber-400"></i> Hộp quà bất ngờ
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- MODAL HỘP QUÀ BÍ MẬT -->
+  <div id="giftModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-md hidden transition-opacity duration-300">
+    <div class="glass-card rounded-3xl p-6 sm:p-8 max-w-md w-full text-center relative border border-amber-400/40 animate-scaleUp">
+      <button id="closeModalBtn" class="absolute top-4 right-4 text-amber-200/60 hover:text-white text-xl p-2">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <div class="text-5xl text-amber-400 mb-4 gift-wiggle cursor-pointer inline-block" id="modalGiftIcon">
+        <i class="fa-solid fa-gifts"></i>
+      </div>
+
+      <h3 class="text-2xl font-serif font-bold text-amber-300 mb-2">Bật Mí Về Tháng 11</h3>
+      <div id="giftDetails" class="text-sm text-amber-100/90 leading-relaxed text-left bg-black/40 p-4 rounded-xl space-y-2 border border-white/10 my-4">
+      <h3 class="text-2xl font-serif font-bold text-amber-300 mb-2">Bật Mí Về Tháng Sinh</h3>
+      <div id="giftDetails" class="text-sm text-amber-100/90 leading-relaxed text-left bg-black/40 p-4 rounded-xl space-y-2 border border-white/10 my-4">
+        <!-- Được cập nhật tự động theo tháng -->
+      </div>
+
+      <button id="modalAffirmBtn" class="w-full py-3 rounded-xl btn-glow text-white text-sm font-bold">
+        Nhận Điều Ước Tốt Lành Này ✨
+      </button>
+    </div>
+  </div>
+
+  <!-- TOAST THÔNG BÁO NHẸ NHÀNG -->
+  <div id="toast" class="fixed bottom-6 right-6 z-50 transform translate-y-24 opacity-0 pointer-events-none px-5 py-3 rounded-2xl glass-card text-amber-200 text-sm font-medium border border-amber-400/40 shadow-2xl flex items-center gap-3">
+    <i id="toastIcon" class="fa-solid fa-circle-check text-amber-400 text-base"></i>
+    <span id="toastMsg">Đã sao chép link thành công!</span>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="relative z-20 py-4 text-center text-xs text-amber-200/40">
+    <p>Thiết kế dành riêng cho những ngày sinh nhật tháng 11 đong đầy yêu thương 🍁</p>
+  </footer>
+
+  <!-- SCRIPT LOGIC TOÀN BỘ TRANG WEB -->
+  <script>
+    // --- 1. DỮ LIỆU CÁC THÁNG (HOA, ĐÁ MAY MẮN, LỜI CHÚC & CHỦ ĐỀ) ---
+    const monthDetails = {
+      1: {
+        stone: "Ngọc Hồng Lựu (Garnet) - Tượng trưng cho bình an & lòng trung thành",
+        flower: "Hoa Cẩm Chướng (Carnation) - Sự thuần khiết & tình yêu sâu đậm",
+        desc: "Tháng khởi đầu năm mới với khí trời se lạnh và những ước mơ tươi sáng đâm chồi.",
+        particleType: "blossom",
+        wishes: [
+          "Chào tháng Giêng của những khởi đầu mới! Chúc bạn tuổi mới ngập tràn may mắn, năng lượng tích cực và chạm tới mọi hoài bão lớn lao!",
+          "Chúc mừng sinh nhật! Chúc cho tuổi mới của bạn rực rỡ và ấm áp như tia nắng đầu xuân, luôn tràn đầy nụ cười và sức khỏe dồi dào!"
+        ]
+      },
+      2: {
+        stone: "Thạch Anh Tím (Amethyst) - Biểu trưng cho sự sáng suốt & bình yên",
+        flower: "Hoa Diên Vĩ & Violet - Tình cảm thủy chung & sự lãng mạn ngọt ngào",
+        desc: "Tháng của những rung động ngọt ngào, những cơn mưa xuân tươi mát.",
+        particleType: "blossom",
+        wishes: [
+          "Chúc mừng sinh nhật tháng 2 ngọt ngào! Chúc bạn luôn đắm chìm trong tình yêu thương, gặp nhiều điều kỳ diệu và bình an!",
+          "Tháng 2 dịu dàng gửi đến bạn ngàn điều ước tốt lành. Mong rằng mỗi chặng đường phía trước của bạn đều nở đầy hoa thơm!"
+        ]
+      },
+      3: {
+        stone: "Ngọc Xanh Biển (Aquamarine) - Đại diện cho hy vọng và sự tĩnh lặng",
+        flower: "Hoa Thủy Tiên (Daffodil) - Sự tái sinh, lạc quan và may mắn",
+        desc: "Tháng của mùa xuân ngập tràn sức sống, trăm hoa khoe sắc.",
+        particleType: "blossom",
+        wishes: [
+          "Chúc bạn một sinh nhật tháng 3 rạng rỡ và tràn ngập sinh khí xuân tươi mới!",
+          "Tuổi mới chúc bạn tự tin tỏa sáng như đóa thủy tiên đón nắng, luôn vui tươi và hạnh phúc đong đầy!"
+        ]
+      },
+      4: {
+        stone: "Kim Cương (Diamond) - Tượng trưng cho sự kiên định và vĩnh cửu",
+        flower: "Hoa Cúc Họa Mi (Daisy) - Vẻ đẹp ngây thơ, mộc mạc và chân thành",
+        desc: "Tháng chuyển giao nắng ấm, tinh khôi và dịu dàng.",
+        particleType: "firefly",
+        wishes: [
+          "Chúc mừng sinh nhật tháng 4! Chúc bạn luôn rạng rỡ, kiên cường và tỏa sáng rực rỡ như một viên kim cương quý giá!",
+          "Tháng 4 ngọt ngào mong bạn luôn mỉm cười trước mọi chông gai và đón nhận vô vàn yêu thương mỗi ngày."
+        ]
+      },
+      5: {
+        stone: "Ngọc Lục Bảo (Emerald) - Sự thịnh vượng, may mắn và trí tuệ",
+        flower: "Hoa Linh Lan (Lily of the Valley) - Hạnh phúc trở lại và sự thanh thuần",
+        desc: "Tháng của những vạt nắng rực rỡ và bầu trời trong xanh dịu mát.",
+        particleType: "firefly",
+        wishes: [
+          "Chúc mừng sinh nhật thiên thần tháng 5! Mong rằng hạnh phúc, may mắn và sự bình yên luôn đồng hành cùng bạn!",
+          "Tuổi mới chúc bạn gặt hái được những thành công rực rỡ nhất như màu xanh tươi thắm của cỏ cây mùa hạ."
+        ]
+      },
+      6: {
+        stone: "Ngọc Trai (Pearl) & Đá Mặt Trăng - Tinh khiết, dịu dàng và quý phái",
+        flower: "Hoa Hồng (Rose) - Tình yêu nồng nàn và vẻ đẹp kiều diễm",
+        desc: "Tháng của những chuyến đi mùa hè đầy ắp trải nghiệm đáng nhớ.",
+        particleType: "firefly",
+        wishes: [
+          "Chúc mừng sinh nhật tháng 6 rực rỡ! Mong bạn luôn tự do, tự tại và đón nhận những chuyến phiêu lưu tuyệt vời!",
+          "Chúc người bạn tháng 6 luôn ngập tràn nhiệt huyết tuổi trẻ, nụ cười tỏa nắng và tình yêu chan chứa!"
+        ]
+      },
+      7: {
+        stone: "Hồng Ngọc (Ruby) - Biểu trưng của đam mê, sức mạnh và nhiệt huyết",
+        flower: "Hoa Phi Yến (Larkspur) - Sự cởi mở, duyên dáng và gắn kết",
+        desc: "Tháng của những cơn mưa rào mùa hạ xua tan oi ả, mang lại bình yên.",
+        particleType: "firefly",
+        wishes: [
+          "Chúc mừng sinh nhật tháng 7! Mong ngọn lửa nhiệt huyết trong tim bạn luôn rực cháy và mang lại thành công vang dội!",
+          "Tuổi mới chúc bạn luôn vui tươi, tự tin và ngập tràn những khoảnh khắc ý nghĩa bên người thân yêu."
+        ]
+      },
+      8: {
+        stone: "Ngọc Bích (Peridot) - Tượng trưng cho sự bảo hộ, tài lộc và sự bình an",
+        flower: "Hoa Lay Ơn (Gladiolus) - Khí chất mạnh mẽ, chính trực và kiên cường",
+        desc: "Tháng của khúc giao mùa hạ sang thu, êm đềm và hoài niệm.",
+        particleType: "autumn",
+        wishes: [
+          "Chúc bạn một sinh nhật tháng 8 dịu dàng và ngập tràn niềm vui bất ngờ!",
+          "Chào đón tuổi mới rực rỡ! Hãy luôn vững vàng và tỏa sáng với cá tính đặc biệt của chính mình nhé!"
+        ]
+      },
+      9: {
+        stone: "Đá Sapphire - Biểu tượng của sự trung thực, thanh cao và thanh thản",
+        flower: "Hoa Cúc Tây (Aster) - Tình yêu bền chặt, sự khôn ngoan và kiên nhẫn",
+        desc: "Tháng thu dịu mát, nắng vàng ươm mật và hương hoa thơm ngát.",
+        particleType: "autumn",
+        wishes: [
+          "Chúc mừng sinh nhật mùa thu tháng 9! Mong tâm hồn bạn luôn an yên, tĩnh lặng và sáng trong như bầu trời mùa thu!",
+          "Tháng 9 lãng mạn mang đến cho bạn muôn điều may mắn, tình yêu ngọt ngào và tuổi mới tràn ngập nụ cười."
+        ]
+      },
+      10: {
+        stone: "Đá Opal & Tourmaline - Sự sáng tạo, quyến rũ và hy vọng may mắn",
+        flower: "Hoa Vạn Thọ (Marigold) - Sự kiên định, nồng ấm và nhiệt thành",
+        desc: "Tháng của những chiếc lá vàng rực và làn gió thu se lạnh lúc chiều tà.",
+        particleType: "autumn",
+        wishes: [
+          "Chúc mừng sinh nhật tháng 10! Chúc bạn có một ngày sinh nhật thật ấm áp, ngập tràn quà tặng và hoa tươi thắm!",
+          "Tuổi mới chúc bạn tỏa sáng với nguồn năng lượng tích cực và luôn được bao bọc trong tình yêu thương!"
+        ]
+      },
+      11: {
+        stone: "Hoàng Ngọc (Topaz) & Thạch Anh Vàng (Citrine) - Ấm áp, thịnh vượng & bảo hộ",
+        flower: "Hoa Cúc Vàng (Chrysanthemum) - Sự bền bỉ, lạc quan và trường thọ",
+        desc: "Tháng 11 của lá phong vàng, gió chớm đông se lạnh và những cái ôm ấm áp.",
+        particleType: "autumn",
+        wishes: [
+          "Tháng 11 về mang theo chút gió chớm đông se lạnh, nhưng nụ cười của bạn luôn là vạt nắng ấm áp nhất. Chúc bạn tuổi mới ngập tràn may mắn, sự nghiệp thăng hoa!",
+          "Chúc mừng sinh nhật thiên thần tháng 11! Mong tuổi mới mang đến cho bạn sự an yên trong tâm hồn, bền bỉ và luôn được yêu thương trọn vẹn!",
+          "Tháng 11 của lá phong vàng và không khí lãng mạn. Chúc bạn có một sinh nhật ngọt ngào như chiếc bánh kem và rực rỡ như hoàng hôn!"
+        ]
+      },
+      12: {
+        stone: "Ngọc Lam (Turquoise) & Tanzanite - May mắn, sự an lành và thấu suốt",
+        flower: "Hoa Trạng Nguyên (Poinsettia) - Niềm vui, sự thành công và ấm áp mùa đông",
+        desc: "Tháng của mùa đông tuyết trắng, mùa lễ hội và những điều kỳ diệu nhiệm màu.",
+        particleType: "snow",
+        wishes: [
+          "Chúc mừng sinh nhật tháng 12! Dù trời đông có giá lạnh, chúc trái tim bạn luôn ấm áp bởi ngọn lửa yêu thương!",
+          "Chúc bạn một tuổi mới lung linh như ánh đèn giáng sinh, ngập tràn phép màu, niềm vui và hạnh phúc bất tận!"
+        ]
+      }
+    };
+
+    let activeWishes = monthDetails[11].wishes;
+    let currentWishIndex = 0;
+    let isCandleLit = true;
+    let recipientData = {
+      name: '',
+      month: 11,
+      day: 15,
+      gender: 'female'
+    };
+
+    // --- TÍNH CUNG HOÀNG ĐẠO CHO 12 THÁNG ---
+    function getZodiac(day, month) {
+      const d = parseInt(day);
+      const m = parseInt(month);
+      if ((m === 1 && d <= 19) || (m === 12 && d >= 22)) return { name: 'Ma Kết (Capricorn)', icon: 'fa-mountain' };
+      if ((m === 1 && d >= 20) || (m === 2 && d <= 18)) return { name: 'Bảo Bình (Aquarius)', icon: 'fa-water' };
+      if ((m === 2 && d >= 19) || (m === 3 && d <= 20)) return { name: 'Song Ngư (Pisces)', icon: 'fa-fish' };
+      if ((m === 3 && d >= 21) || (m === 4 && d <= 19)) return { name: 'Bạch Dương (Aries)', icon: 'fa-fire' };
+      if ((m === 4 && d >= 20) || (m === 5 && d <= 20)) return { name: 'Kim Ngưu (Taurus)', icon: 'fa-shield-halved' };
+      if ((m === 5 && d >= 21) || (m === 6 && d <= 21)) return { name: 'Song Tử (Gemini)', icon: 'fa-masks-theater' };
+      if ((m === 6 && d >= 22) || (m === 7 && d <= 22)) return { name: 'Cự Giải (Cancer)', icon: 'fa-moon' };
+      if ((m === 7 && d >= 23) || (m === 8 && d <= 22)) return { name: 'Sư Tử (Leo)', icon: 'fa-sun' };
+      if ((m === 8 && d >= 23) || (m === 9 && d <= 22)) return { name: 'Xử Nữ (Virgo)', icon: 'fa-feather' };
+      if ((m === 9 && d >= 23) || (m === 10 && d <= 23)) return { name: 'Thiên Bình (Libra)', icon: 'fa-scale-balanced' };
+      if ((m === 10 && d >= 24) || (m === 11 && d <= 22)) return { name: 'Bọ Cạp (Scorpio)', icon: 'fa-shield-cat' };
+      if ((m === 11 && d >= 23) || (m === 12 && d <= 21)) return { name: 'Nhân Mã (Sagittarius)', icon: 'fa-bullseye' };
+      return { name: 'Thiên Hạt / Bọ Cạp', icon: 'fa-star' };
+    }
+
+    // --- 2. HỆ THỐNG ÂM THANH (WEB AUDIO API) ---
+    // --- 3. CANVAS ANIMATION TÙY BIẾN THEO MÙA ---
+    const canvas = document.getElementById('autumnCanvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    const particleCount = 35;
+    let currentParticleType = 'autumn';
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    class Particle {
+      constructor() {
+        this.reset();
+      }
+      reset() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * -canvas.height;
+        this.size = Math.random() * 12 + 6;
+        this.speedY = Math.random() * 1.2 + 0.8;
+        this.speedX = Math.sin(Math.random() * Math.PI) * 0.8;
+        this.rotation = Math.random() * Math.PI * 2;
+        this.rotationSpeed = (Math.random() - 0.5) * 0.03;
+        this.opacity = Math.random() * 0.5 + 0.4;
+      }
+      update() {
+        this.y += this.speedY;
+        this.x += Math.sin(this.y * 0.015) * 0.7 + this.speedX;
+        this.rotation += this.rotationSpeed;
+
+        if (this.y > canvas.height + 20) {
+          this.reset();
+          this.y = -20;
+        }
+      }
+      draw() {
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.rotate(this.rotation);
+        ctx.globalAlpha = this.opacity;
+
+        if (currentParticleType === 'blossom') {
+          // Hoa đào / cánh hoa hồng pastel mùa xuân
+          ctx.fillStyle = '#FDA4AF';
+          ctx.beginPath();
+          ctx.ellipse(0, 0, this.size, this.size * 0.6, 0, 0, Math.PI * 2);
+          ctx.fill();
+        } else if (currentParticleType === 'snow') {
+          // Bông tuyết mùa đông
+          ctx.fillStyle = '#E0F2FE';
+          ctx.beginPath();
+          ctx.arc(0, 0, this.size * 0.35, 0, Math.PI * 2);
+          ctx.fill();
+        } else if (currentParticleType === 'firefly') {
+          // Đom đóm / hạt vàng lung linh mùa hạ
+          ctx.fillStyle = '#FDE047';
+          ctx.shadowBlur = 10;
+          ctx.shadowColor = '#FACC15';
+          ctx.beginPath();
+          ctx.arc(0, 0, this.size * 0.3, 0, Math.PI * 2);
+          ctx.fill();
+        } else {
+          // Lá phong mùa thu ấm áp
+          ctx.fillStyle = ['#F59E0B', '#D97706', '#EA580C', '#B45309'][Math.floor(this.x % 4)];
+          ctx.beginPath();
+          ctx.moveTo(0, -this.size / 2);
+          ctx.bezierCurveTo(this.size / 2, -this.size / 3, this.size / 2, this.size / 3, 0, this.size);
+          ctx.bezierCurveTo(-this.size / 2, this.size / 3, -this.size / 2, -this.size / 3, 0, -this.size / 2);
+          ctx.fill();
+        }
+
+        ctx.restore();
+      }
+    }
+
+    for (let i = 0; i < particleCount; i++) {
+      particles.push(new Particle());
+    }
+
+    function animateParticles() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach(p => {
+        p.update();
+        p.draw();
+      });
+      requestAnimationFrame(animateParticles);
+    }
+    animateParticles();
+
+    // --- 4. TƯƠNG TÁC GIAO DIỆN & HIỂN THỊ THIỆP ---
+    const formScreen = document.getElementById('formScreen');
+    const cardScreen = document.getElementById('cardScreen');
+    const birthdayForm = document.getElementById('birthdayForm');
+    const resetNameBtn = document.getElementById('resetNameBtn');
+
+    const displayRecipientName = document.getElementById('displayRecipientName');
+    const badgeGender = document.getElementById('badgeGender');
+    const badgeZodiac = document.getElementById('badgeZodiac');
+    const badgeDate = document.getElementById('badgeDate');
+    const wishContent = document.getElementById('wishContent');
+    const giftDetails = document.getElementById('giftDetails');
+
+    function showCard(name, month, day, gender) {
+      const m = parseInt(month) || 11;
+      const d = parseInt(day) || 15;
+      recipientData = { name, month: m, day: d, gender };
+
+      displayRecipientName.innerText = name;
+
+      // Cập nhật Cung hoàng đạo
+      const zodiac = getZodiac(d, m);
+      badgeZodiac.innerHTML = `<i class="fa-solid ${zodiac.icon}"></i> ${zodiac.name}`;
+
+      // Cập nhật Danh xưng & Tháng sinh
+      const genderLabels = {
+        male: `Chàng trai Tháng ${m}`,
+        female: `Cô gái Tháng ${m}`,
+        lover: `Người thương Tháng ${m}`,
+        friend: `Bạn thân Tháng ${m}`
+      };
+      badgeGender.innerHTML = `<i class="fa-solid fa-sparkles"></i> ${genderLabels[gender] || `Thiên thần Tháng ${m}`}`;
+      badgeDate.innerHTML = `<i class="fa-regular fa-calendar-check"></i> Ngày ${d} Tháng ${m}`;
+
+      // Lấy thông tin tháng
+      const mInfo = monthDetails[m] || monthDetails[11];
+      currentParticleType = mInfo.particleType || 'autumn';
+      activeWishes = mInfo.wishes || monthDetails[11].wishes;
+      currentWishIndex = Math.floor(Math.random() * activeWishes.length);
+      wishContent.innerText = activeWishes[currentWishIndex];
+
+      // Chi tiết hộp quà bật mí theo tháng
+      giftDetails.innerHTML = `
+        <p>✨ <b>Đá may mắn:</b> ${mInfo.stone}</p>
+        <p>🌸 <b>Loài hoa biểu trưng:</b> ${mInfo.flower}</p>
+        <p>🍂 <b>Đặc điểm đáng yêu:</b> ${mInfo.desc} Người sinh vào tháng này luôn mang đến nguồn cảm hứng và sự ấm áp khó quên!</p>
+      `;
+
+      // Chuyển màn hình
+      formScreen.classList.add('hidden');
+      cardScreen.classList.remove('hidden');
+      resetNameBtn.classList.remove('hidden');
+      resetNameBtn.classList.add('flex');
+
+      triggerCelebration();
+
+      if (!isPlayingMusic) {
+        toggleMusic();
+      }
+    }
+
+    // Xử lý nộp form
+    birthdayForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const name = document.getElementById('userNameInput').value.trim();
+      const month = document.getElementById('birthMonthSelect').value;
+      const day = document.getElementById('birthDayInput').value;
+      const gender = document.getElementById('genderSelect').value;
+
+      if (!name) return;
+      showCard(name, month, day, gender);
+      updateUrlHash(name, month, day, gender);
+    });
+
+    // Giới hạn ngày tối đa theo tháng
+    document.getElementById('birthMonthSelect').addEventListener('change', (e) => {
+      const m = parseInt(e.target.value);
+      const dayInput = document.getElementById('birthDayInput');
+      if (m === 2) {
+        dayInput.max = 29;
+      } else if ([4, 6, 9, 11].includes(m)) {
+        dayInput.max = 30;
+      } else {
+        dayInput.max = 31;
+      }
+      if (parseInt(dayInput.value) > parseInt(dayInput.max)) {
+        dayInput.value = dayInput.max;
+      }
+    });
+
+    // Nút đổi lời chúc
+    document.getElementById('wishShuffleBtn').addEventListener('click', () => {
+      currentWishIndex = (currentWishIndex + 1) % activeWishes.length;
+      wishContent.style.opacity = '0';
+      setTimeout(() => {
+        wishContent.innerText = activeWishes[currentWishIndex];
+        wishContent.style.opacity = '1';
+      }, 200);
+      playTone(587.33, 0.2, 'sine', 0.05);
+    });
+
+    // Cập nhật liên kết URL
+    function updateUrlHash(name, month, day, gender) {
+      const params = new URLSearchParams();
+      params.set('name', encodeURIComponent(name));
+      params.set('month', month);
+      params.set('day', day);
+      params.set('gender', gender);
+      window.history.replaceState(null, '', '#' + params.toString());
+    }
+
+    function checkUrlParams() {
+      if (window.location.hash) {
+        const hash = window.location.hash.substring(1);
+        const params = new URLSearchParams(hash);
+        const nameParam = params.get('name');
+        const monthParam = params.get('month');
+        const dayParam = params.get('day');
+        const genderParam = params.get('gender');
+
+        if (nameParam) {
+          const decodedName = decodeURIComponent(nameParam);
+          document.getElementById('userNameInput').value = decodedName;
+          if (monthParam) document.getElementById('birthMonthSelect').value = monthParam;
+          if (dayParam) document.getElementById('birthDayInput').value = dayParam;
+          if (genderParam) document.getElementById('genderSelect').value = genderParam;
+
+          showCard(decodedName, monthParam || 11, dayParam || 15, genderParam || 'female');
+        }
+      }
+    }
+
+    document.getElementById('shareLinkBtn').addEventListener('click', () => {
+      updateUrlHash(recipientData.name, recipientData.month, recipientData.day, recipientData.gender);
+      const urlToShare = window.location.href;
+
+      const tempInput = document.createElement('input');
+      tempInput.value = urlToShare;
+      document.body.appendChild(tempInput);
+      tempInput.select();
+      document.execCommand('copy');
+      document.body.removeChild(tempInput);
+
+      showToast('Đã sao chép link thiệp chúc mừng sinh nhật!', 'fa-check-double');
+    });
+    }
+
+    let noteIdx = 0;
+    function scheduleNextNote() {
+      if (!isPlayingMusic) return;
+      const current = birthdayMelody[noteIdx];
+      if (current && notes[current.note]) {
+        playTone(notes[current.note], current.duration * 0.9, 'sine', 0.07);
+      }
+      noteIdx = (noteIdx + 1) % birthdayMelody.length;
+      const delay = (current ? current.duration : 0.8) * 600;
+      musicInterval = setTimeout(scheduleNextNote, delay);
+    }
+
+    function toggleMusic() {
+      initAudioContext();
+      isPlayingMusic = !isPlayingMusic;
+
+      const icon = document.getElementById('musicIcon');
+      const text = document.getElementById('musicStatusText');
+
+      if (isPlayingMusic) {
+        icon.className = 'fa-solid fa-music text-amber-400 animate-pulse';
+        text.innerText = 'Dừng nhạc';
+        scheduleNextNote();
+        showToast('Giai điệu sinh nhật đang phát 🎵', 'fa-music');
+      } else {
+        clearTimeout(musicInterval);
+        icon.className = 'fa-solid fa-volume-xmark text-amber-400';
+        text.innerText = 'Bật nhạc';
+      }
+    }
+
+    // --- 3. CANVAS ANIMATION: LÁ PHONG VÀ BỤI VÀNG RƠI ---
+    const canvas = document.getElementById('autumnCanvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    const particleCount = 35;
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    class AutumnLeaf {
+      constructor() {
+        this.reset();
+      }
+      reset() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * -canvas.height;
+        this.size = Math.random() * 14 + 10;
+        this.speedY = Math.random() * 1.2 + 0.8;
+        this.speedX = Math.sin(Math.random() * Math.PI) * 0.8;
+        this.rotation = Math.random() * Math.PI * 2;
+        this.rotationSpeed = (Math.random() - 0.5) * 0.03;
+        this.opacity = Math.random() * 0.5 + 0.4;
+        
+        // Bảng màu lá thu
+        const colors = [
+          '#F59E0B', // Amber
+          '#D97706', // Gold rust
+          '#EA580C', // Orange
+          '#B45309', // Deep amber
+          '#DC2626'  // Red autumn
+        ];
+        this.color = colors[Math.floor(Math.random() * colors.length)];
+      }
+      update() {
+        this.y += this.speedY;
+        this.x += Math.sin(this.y * 0.015) * 0.7 + this.speedX;
+        this.rotation += this.rotationSpeed;
+
+        if (this.y > canvas.height + 20) {
+          this.reset();
+          this.y = -20;
+        }
+      }
+      draw() {
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.rotate(this.rotation);
+        ctx.globalAlpha = this.opacity;
+        ctx.fillStyle = this.color;
+
+        // Vẽ chiếc lá phong cách điệu
+        ctx.beginPath();
+        ctx.moveTo(0, -this.size / 2);
+        ctx.bezierCurveTo(this.size / 2, -this.size / 3, this.size / 2, this.size / 3, 0, this.size);
+        ctx.bezierCurveTo(-this.size / 2, this.size / 3, -this.size / 2, -this.size / 3, 0, -this.size / 2);
+        ctx.fill();
+
+        // Gân lá nhẹ
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.25)';
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(0, -this.size / 2.5);
+        ctx.lineTo(0, this.size * 0.8);
+        ctx.stroke();
+
+        ctx.restore();
+      }
+    }
+
+    // Khởi tạo các phần tử lá rơi
+    for (let i = 0; i < particleCount; i++) {
+      particles.push(new AutumnLeaf());
+    }
+
+    function animateLeaves() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach(leaf => {
+        leaf.update();
+        leaf.draw();
+      });
+      requestAnimationFrame(animateLeaves);
+    }
+    animateLeaves();
+
+    // --- 4. TƯƠNG TÁC GIAO DIỆN & LOGIC THIỆP ---
+    const formScreen = document.getElementById('formScreen');
+    const cardScreen = document.getElementById('cardScreen');
+    const birthdayForm = document.getElementById('birthdayForm');
+    const resetNameBtn = document.getElementById('resetNameBtn');
+
+    // Các phần tử hiển thị thông tin
+    const displayRecipientName = document.getElementById('displayRecipientName');
+    const badgeGender = document.getElementById('badgeGender');
+    const badgeZodiac = document.getElementById('badgeZodiac');
+    const badgeDate = document.getElementById('badgeDate');
+    const wishContent = document.getElementById('wishContent');
+
+    // Xác định cung hoàng đạo tháng 11
+    function getZodiac(day) {
+      if (day <= 21) {
+        return { name: 'Thiên Hạt / Bọ Cạp (Scorpio)', icon: 'fa-shield-cat', desc: 'Huyền bí, chân thành & sâu sắc' };
+      } else {
+        return { name: 'Nhân Mã (Sagittarius)', icon: 'fa-bullseye', desc: 'Phóng khoáng, ấm áp & yêu tự do' };
+      }
+    }
+
+    function showCard(name, day, gender) {
+      recipientData = { name, day: parseInt(day) || 15, gender };
+      displayRecipientName.innerText = name;
+
+      // Cập nhật Cung hoàng đạo
+      const zodiac = getZodiac(recipientData.day);
+      badgeZodiac.innerHTML = `<i class="fa-solid ${zodiac.icon}"></i> ${zodiac.name}`;
+
+      // Cập nhật Nhãn giới tính / danh xưng
+      if (gender === 'male') {
+        badgeGender.innerHTML = `<i class="fa-solid fa-leaf"></i> Chàng trai tháng 11`;
+      } else if (gender === 'female') {
+        badgeGender.innerHTML = `<i class="fa-solid fa-sparkles"></i> Cô gái tháng 11`;
+      } else {
+        badgeGender.innerHTML = `<i class="fa-solid fa-heart"></i> Bạn tốt tháng 11`;
+      }
+
+      badgeDate.innerHTML = `<i class="fa-regular fa-calendar-check"></i> Ngày ${recipientData.day} Tháng 11`;
+
+      // Cập nhật lời chúc đầu tiên
+      currentWishIndex = Math.floor(Math.random() * novemberWishes.length);
+      wishContent.innerText = novemberWishes[currentWishIndex];
+
+      // Đổi màn hình mượt mà
+      formScreen.classList.add('hidden');
+      cardScreen.classList.remove('hidden');
+      resetNameBtn.classList.remove('hidden');
+      resetNameBtn.classList.add('flex');
+
+      // Tự động bắn pháo hoa chào đón
+      triggerCelebration();
+
+      // Bật nhạc nếu chưa bật
+      if (!isPlayingMusic) {
+        toggleMusic();
+      }
+    }
+
+    function triggerCelebration() {
+      playChime();
+      if (typeof confetti === 'function') {
+        confetti({
+          particleCount: 80,
+          spread: 70,
+          origin: { y: 0.6 },
+          colors: ['#F59E0B', '#FBBF24', '#EF4444', '#EC4899', '#8B5CF6']
+        });
+      }
+    }
+
+    // Xử lý nộp form
+    birthdayForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const name = document.getElementById('userNameInput').value.trim();
+      const day = document.getElementById('birthDayInput').value;
+      const gender = document.getElementById('genderSelect').value;
+
+      if (!name) return;
+      showCard(name, day, gender);
+      updateUrlHash(name, day, gender);
+    });
+
+    // Nút làm lại / đổi tên
+    resetNameBtn.addEventListener('click', () => {
+      cardScreen.classList.add('hidden');
+      formScreen.classList.remove('hidden');
+      resetNameBtn.classList.add('hidden');
+      resetNameBtn.classList.remove('flex');
+    });
+
+    // --- 5. TƯƠNG TÁC THỔI NẾN TRÊN BÁNH SINH NHẬT ---
+    const cakeContainer = document.getElementById('cakeContainer');
+    const candleFlame = document.getElementById('candleFlame');
+    const smokeEffect = document.getElementById('smokeEffect');
+    const candleTip = document.getElementById('candleTip');
+
+    cakeContainer.addEventListener('click', () => {
+      if (isCandleLit) {
+        // Thổi tắt nến
+        candleFlame.style.opacity = '0';
+        candleFlame.style.transform = 'scale(0.2)';
+        smokeEffect.classList.remove('active');
+        void smokeEffect.offsetWidth; // Trigger reflow
+        smokeEffect.classList.add('active');
+
+        candleTip.innerHTML = `<i class="fa-solid fa-fire text-amber-500"></i> Ước nguyện đã được gửi đi! Bấm lại để thắp nến ✨`;
+        isCandleLit = false;
+
+        playChime();
+        triggerCelebration();
+        showToast('Lời ước tháng 11 của bạn chắc chắn sẽ thành hiện thực! ✨', 'fa-star');
+      } else {
+        // Thắp lại nến
+        candleFlame.style.opacity = '1';
+        candleFlame.style.transform = 'scale(1)';
+        smokeEffect.classList.remove('active');
+        candleTip.innerHTML = `<i class="fa-solid fa-wind text-amber-400"></i> Bấm vào bánh sinh nhật để <b>Thổi Nến</b> & Ước Nguyện!`;
+        isCandleLit = true;
+        showToast('Nến đã được thắp sáng rực rỡ!', 'fa-fire');
+      }
+    });
+
+    // Nút nổ pháo hoa giấy
+    document.getElementById('confettiBtn').addEventListener('click', () => {
+      triggerCelebration();
+      showToast('Chúc bạn một sinh nhật rực rỡ và ngọt ngào! 🎉', 'fa-gift');
+    });
+
+    // Nút đổi lời chúc mới
+    document.getElementById('wishShuffleBtn').addEventListener('click', () => {
+      currentWishIndex = (currentWishIndex + 1) % novemberWishes.length;
+      wishContent.style.opacity = '0';
+      setTimeout(() => {
+        wishContent.innerText = novemberWishes[currentWishIndex];
+        wishContent.style.opacity = '1';
+      }, 200);
+      playTone(587.33, 0.2, 'sine', 0.05);
+    });
+
+    // --- 6. HỘP QUÀ BÍ MẬT & POPUP MODAL ---
+    const giftModal = document.getElementById('giftModal');
+    const giftBoxBtn = document.getElementById('giftBoxBtn');
+    const closeModalBtn = document.getElementById('closeModalBtn');
+    const modalAffirmBtn = document.getElementById('modalAffirmBtn');
+
+    function openModal() {
+      giftModal.classList.remove('hidden');
+      playChime();
+    }
+    function closeModal() {
+      giftModal.classList.add('hidden');
+    }
+
+    giftBoxBtn.addEventListener('click', openModal);
+    closeModalBtn.addEventListener('click', closeModal);
+    modalAffirmBtn.addEventListener('click', () => {
+      closeModal();
+      triggerCelebration();
+      showToast('Cảm ơn bạn vì là một phần tuyệt vời của tháng 11! 🍂', 'fa-heart');
+    });
+
+    giftModal.addEventListener('click', (e) => {
+      if (e.target === giftModal) closeModal();
+    });
+
+    // --- 7. CHIA SẺ VÀ URL PARAMETERS ---
+    function updateUrlHash(name, day, gender) {
+      const params = new URLSearchParams();
+      params.set('name', encodeURIComponent(name));
+      params.set('day', day);
+      params.set('gender', gender);
+      window.history.replaceState(null, '', '#' + params.toString());
+    }
+
+    function checkUrlParams() {
+      if (window.location.hash) {
+        const hash = window.location.hash.substring(1);
+        const params = new URLSearchParams(hash);
+        const nameParam = params.get('name');
+        const dayParam = params.get('day');
+        const genderParam = params.get('gender');
+
+        if (nameParam) {
+          const decodedName = decodeURIComponent(nameParam);
+          document.getElementById('userNameInput').value = decodedName;
+          if (dayParam) document.getElementById('birthDayInput').value = dayParam;
+          if (genderParam) document.getElementById('genderSelect').value = genderParam;
+
+          showCard(decodedName, dayParam || 15, genderParam || 'female');
+        }
+      }
+    }
+
+    // Sao chép link chia sẻ
+    document.getElementById('shareLinkBtn').addEventListener('click', () => {
+      updateUrlHash(recipientData.name, recipientData.day, recipientData.gender);
+      const urlToShare = window.location.href;
+
+      // Hỗ trợ sao chép an toàn
+      const tempInput = document.createElement('input');
+      tempInput.value = urlToShare;
+      document.body.appendChild(tempInput);
+      tempInput.select();
+      document.execCommand('copy');
+      document.body.removeChild(tempInput);
+
+      showToast('Đã sao chép link! Hãy gửi ngay cho người ấy nhé 💌', 'fa-check-double');
+    });
+
+    // Nút Bật/Tắt Nhạc
+    document.getElementById('musicToggleBtn').addEventListener('click', toggleMusic);
+
+    // Toast message hỗ trợ người dùng
+    function showToast(text, iconClass = 'fa-circle-check') {
+      const toast = document.getElementById('toast');
+      const toastMsg = document.getElementById('toastMsg');
+      const toastIcon = document.getElementById('toastIcon');
+
+      toastMsg.innerText = text;
+      toastIcon.className = `fa-solid ${iconClass} text-amber-400 text-base`;
+
+      toast.classList.remove('translate-y-24', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+
+      setTimeout(() => {
+        toast.classList.add('translate-y-24', 'opacity-0');
+        toast.classList.remove('translate-y-0', 'opacity-100');
+      }, 3500);
+    }
+
+    // Kiểm tra thông tin trong URL khi tải trang
+    window.addEventListener('DOMContentLoaded', () => {
+      checkUrlParams();
+    });
+  </script>
+</body>
+</html>
